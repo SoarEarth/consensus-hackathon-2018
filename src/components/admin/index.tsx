@@ -43,8 +43,6 @@ class Admin extends React.Component<AdminProps, AdminState> {
                     </div>
                 </div>
             
-
-            
                 <dl>
                     <dt>Owner</dt>
                     <dd>{this.state.info.owner}</dd>
