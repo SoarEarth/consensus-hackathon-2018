@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import { getEventsForCode } from '../lib/growNYC-service';
 
 
 interface BuyerProps extends React.Props<Buyer> {}
@@ -10,10 +11,15 @@ interface BuyerState {
 
 class Buyer extends React.Component<BuyerProps, BuyerState> {
 
+    static contextTypes = {
+        state: PropTypes.object
+    };
+
     constructor(props: BuyerProps) {
         super(props);
-        this.setState({code: ''});
+        this.state = {code: ''};
         this.handleCodeChange = this.handleCodeChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -24,9 +30,17 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
     }
 
     handleSubmit(event: any) {
-        var code = event.target.value;
+        event.preventDefault();
+        let web3 = this.context.state.web3;
+        var code = this.state.code;
         console.log('Code', code);
-
+        getEventsForCode(web3, String(code))
+        .then(results => {
+            console.log(results);
+        })
+        .catch(err => {
+            console.error(err);
+        })
         //TODO: write
     }
 
