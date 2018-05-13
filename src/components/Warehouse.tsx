@@ -15,7 +15,7 @@ class Warehouse extends React.Component<WarehouseProps, WarehouseState> {
     constructor(props: WarehouseProps) {
         super(props);
         this.state = {code: null, result: null }
-        this.setState({code: ''});
+        this.state = {code: ''};
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleScan = this.handleScan.bind(this);
         this.handleError = this.handleError.bind(this);
@@ -29,6 +29,7 @@ class Warehouse extends React.Component<WarehouseProps, WarehouseState> {
     }
 
     handleSubmit(event: any) {
+        event.preventDefault();        
         var code = event.target.value;
         console.log('Code', code);
 
