@@ -37,22 +37,25 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
         let web3 = this.context.state.web3;
         var code = this.state.code;
         console.log('Code', code);
-        getEventsForCode(web3, String(code))
-        .then(results => {
-            console.log(results);
-        })
-        .catch(err => {
-            console.error(err);
-        })
+        
         //TODO: write
     }
 
     handleScan(data){
         console.log('handleScan: ', data);
         if(data){
+        let web3 = this.context.state.web3;
+            
           this.setState({
             result: data,
           })
+          getEventsForCode(web3, String(data))
+        .then(results => {
+            console.log(results);
+        })
+        .catch(err => {
+            console.error(err);
+        })
         }
       }
 
