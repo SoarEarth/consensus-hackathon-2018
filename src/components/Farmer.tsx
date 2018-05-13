@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import QrReader from 'react-qr-reader'
-
+import Geocode from 'react-geocode';
 
 import { submitFarmCode } from '../lib/growNYC-service';
-
 
 interface FarmerProps extends React.Props<Farmer> {
 
@@ -15,6 +14,7 @@ interface FarmerState {
     result?: any;
     lat?: any;
     lng?: any;
+    streetAddress?: any;
 }
 
 class Farmer extends React.Component<{}, FarmerState> {
@@ -25,7 +25,7 @@ class Farmer extends React.Component<{}, FarmerState> {
 
     constructor(props: FarmerProps) {
         super(props);
-        this.state = {code: null, result: null, lat: null, lng: null};
+        this.state = {code: null, result: null, lat: null, lng: null, streetAddress: null};
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleScan = this.handleScan.bind(this);
         this.handleError = this.handleError.bind(this);
@@ -35,8 +35,10 @@ class Farmer extends React.Component<{}, FarmerState> {
         this.usersLocation();
     }
 
-    componentWillReceiveProps(props: FarmerProps) {
-        this.usersLocation();
+
+    componentWillMount() {
+        Geocode.setApiKey('AIzaSyDIHfiYwIdK0Lclybj1_Y9LaG4vt3moT2g');
+        Geocode.enableDebug();
     }
 
 
@@ -69,6 +71,18 @@ class Farmer extends React.Component<{}, FarmerState> {
         console.error(err)
       }
 
+      reverseGeocodePromise(lat: any, lng: any): Promise<any> {
+        if (lat === undefined || lng === undefined) { return Promise.reject('No latlng'); }
+
+        let geocodePromise: Promise<any> = new Promise(function(resolve: any, reject: any) {
+            setTimeout(function() {
+                resolve(Geocode.fromLatLng(lat, lng));
+            });
+        });
+
+        return geocodePromise;
+    }
+
       usersLocation() {
         if (navigator.geolocation) {
             console.log(navigator.geolocation);
@@ -78,6 +92,19 @@ class Farmer extends React.Component<{}, FarmerState> {
                     lng: position.coords.longitude
                     }
                 );
+
+                let geocodePromise = this.reverseGeocodePromise(position.coords.latitude, position.coords.longitude);
+
+                let addresses = geocodePromise
+                .then((result: any) => {
+                    let formattedAddresses = result.results.map((val) => {
+                        return val.formatted_address;
+                    });
+
+                    console.log("Street address: ", formattedAddresses[0]);
+                    this.setState({streetAddress: formattedAddresses[0]});
+                    
+                });
             })
         } else {
             //browser doesn't support geolocation, set as vancouver
@@ -93,6 +120,10 @@ class Farmer extends React.Component<{}, FarmerState> {
                     <div className="container">
                         <h1 className="display-4">Farmers</h1>
                         <p className="lead">Scan your produce's QR code.</p>
+                        <p>{this.state.streetAddress}</p>
+                    </div>
+                    <div>
+                        
                     </div>
                 </div>
 
@@ -104,8 +135,10 @@ class Farmer extends React.Component<{}, FarmerState> {
                                 <label>
                                 Code:
                                 <input type="text" value={this.state.result} onChange={this.handleCodeChange} />
+                                <input type="text" value={this.state.streetAddress} />
                                 </label>
                                 <input type="submit" value="Submit" />
+                                { console.log('lat', this.state.lat) }
                             </form>
                         : 
                             <QrReader
