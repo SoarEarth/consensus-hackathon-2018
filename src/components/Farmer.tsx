@@ -4,6 +4,7 @@ import QrReader from 'react-qr-reader'
 import Geocode from 'react-geocode';
 
 import { submitFarmCode } from '../lib/growNYC-service';
+import { Metadata } from '../lib/model';
 
 interface FarmerProps extends React.Props<Farmer> {
 
@@ -53,9 +54,14 @@ class Farmer extends React.Component<{}, FarmerState> {
         event.preventDefault();
         let web3 = this.context.state.web3;
         var code = this.state.result;
+        let metadata: Metadata = {
+            address: this.state.streetAddress,
+            lat: this.state.lat,
+            lng: this.state.lng,
+        };
         console.log('Code', code);
         
-        submitFarmCode(web3, code, '{}').then(res => {
+        submitFarmCode(web3, code, metadata).then(res => {
             console.log('TransactionHash: ', res);
         });
     }

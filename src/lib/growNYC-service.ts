@@ -1,5 +1,5 @@
 import Web3Helper from './web3-helper';
-import { AdminInfo, GrowNYCEvent } from './model';
+import { AdminInfo, GrowNYCEvent, Metadata } from './model';
 
 ///////////////////
 // LISTINGS INFO //
@@ -18,40 +18,43 @@ export function fetchAdminInfo(web3: any): Promise<AdminInfo> {
     });
 }
 
-export function submitFarmCode(web3: any, code: string, metadata: string): Promise<string> {
+export function submitFarmCode(web3: any, code: string, metadata: Metadata): Promise<string> {
     let userAddressPromise = Web3Helper.getUserAddressPromise(web3);
     let growNYCPromise = Web3Helper.getGrowNYCContractPromise(web3);
     return Promise.all([growNYCPromise, userAddressPromise]).then(results => {
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        return growNYCContract.methods.farm(codeHex, metadata).send({ from: userAddress });
+        let metadataString = JSON.stringify(metadata);
+        return growNYCContract.methods.farm(codeHex, metadataString).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });
 }
 
-export function submitWarehouseCode(web3: any, code: string, metadata: string): Promise<string> {
+export function submitWarehouseCode(web3: any, code: string, metadata: Metadata): Promise<string> {
     let userAddressPromise = Web3Helper.getUserAddressPromise(web3);
     let growNYCPromise = Web3Helper.getGrowNYCContractPromise(web3);
     return Promise.all([growNYCPromise, userAddressPromise]).then(results => {
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        return growNYCContract.methods.warehouse(codeHex, metadata).send({ from: userAddress });
+        let metadataString = JSON.stringify(metadata);
+        return growNYCContract.methods.warehouse(codeHex, metadataString).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });
 }
 
-export function submitRetailCode(web3: any, code: string, metadata: string): Promise<string> {
+export function submitRetailCode(web3: any, code: string, metadata: Metadata): Promise<string> {
     let userAddressPromise = Web3Helper.getUserAddressPromise(web3);
     let growNYCPromise = Web3Helper.getGrowNYCContractPromise(web3);
     return Promise.all([growNYCPromise, userAddressPromise]).then(results => {
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        return growNYCContract.methods.retail(codeHex, metadata).send({ from: userAddress });
+        let metadataString = JSON.stringify(metadata);
+        return growNYCContract.methods.retail(codeHex, metadataString).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });

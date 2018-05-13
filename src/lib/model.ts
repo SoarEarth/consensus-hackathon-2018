@@ -3,9 +3,15 @@ export interface AdminInfo {
     userAddress?: string;
 }
 
+export interface Metadata {
+    address?: string;
+    lat?: string;
+    lng?: string;
+}
+
 export interface GrowNYCEvent {
     order: number;
     timestampInSeconds: number;
     sender: string;
-    metadata: string;
+    metadata: Metadata;
 }

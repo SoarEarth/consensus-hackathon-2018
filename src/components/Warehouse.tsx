@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import QrReader from 'react-qr-reader'
+import { Metadata } from '../lib/model';
+import { submitWarehouseCode } from '../lib/growNYC-service';
 
 
 interface WarehouseProps {}
@@ -12,13 +14,17 @@ interface WarehouseState {
 
 class Warehouse extends React.Component<WarehouseProps, WarehouseState> {
 
+    static contextTypes = {
+        state: PropTypes.object
+    };
+
     constructor(props: WarehouseProps) {
         super(props);
         this.state = {code: null, result: null }
-        this.state = {code: ''};
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleScan = this.handleScan.bind(this);
         this.handleError = this.handleError.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -29,9 +35,15 @@ class Warehouse extends React.Component<WarehouseProps, WarehouseState> {
     }
 
     handleSubmit(event: any) {
-        event.preventDefault();        
-        var code = event.target.value;
+        event.preventDefault();
+        let web3 = this.context.state.web3;
+        var code = this.state.result;
+        let metadata: Metadata = {};
         console.log('Code', code);
+        
+        submitWarehouseCode(web3, code, metadata).then(res => {
+            console.log('TransactionHash: ', res);
+        });
 
         //TODO: write
     }
