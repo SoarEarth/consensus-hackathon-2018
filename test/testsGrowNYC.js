@@ -23,8 +23,9 @@ contract('GrowNYC', function ([farm, warehouse, retail, customer]) {
     let tx = await this.growNYC.farm(code, metadata, { from: farm });
     tx.logs.length.should.be.equal(1);
     let event = tx.logs[0];
-    event.event.should.be.equal("OnFarm");
+    event.event.should.be.equal("GrowNYCEvent");
     web3.toUtf8(event.args.code).should.be.equal(code);
+    event.args.order.should.be.bignumber.equal(1);
     event.args.user.should.be.equal(farm);
     event.args.metadata.should.be.equal(metadata);
   });
@@ -33,8 +34,9 @@ contract('GrowNYC', function ([farm, warehouse, retail, customer]) {
     let tx = await this.growNYC.warehouse(code, metadata, { from: warehouse });
     tx.logs.length.should.be.equal(1);
     let event = tx.logs[0];
-    event.event.should.be.equal("InWarehouse");
+    event.event.should.be.equal("GrowNYCEvent");
     web3.toUtf8(event.args.code).should.be.equal(code);
+    event.args.order.should.be.bignumber.equal(2);
     event.args.user.should.be.equal(warehouse);
     event.args.metadata.should.be.equal(metadata);
   });
@@ -43,8 +45,9 @@ contract('GrowNYC', function ([farm, warehouse, retail, customer]) {
     let tx = await this.growNYC.retail(code, metadata, { from: retail });
     tx.logs.length.should.be.equal(1);
     let event = tx.logs[0];
-    event.event.should.be.equal("InRetail");
+    event.event.should.be.equal("GrowNYCEvent");
     web3.toUtf8(event.args.code).should.be.equal(code);
+    event.args.order.should.be.bignumber.equal(3);
     event.args.user.should.be.equal(retail);
     event.args.metadata.should.be.equal(metadata);
   })

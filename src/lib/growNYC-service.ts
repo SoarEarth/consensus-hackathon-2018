@@ -1,5 +1,5 @@
 import Web3Helper from './web3-helper';
-import { AdminInfo } from './model';
+import { AdminInfo, GrowNYCEvent } from './model';
 
 ///////////////////
 // LISTINGS INFO //
@@ -25,8 +25,7 @@ export function submitFarmCode(web3: any, code: string, metadata: string): Promi
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        let metadataHex = web3.utils.utf8ToHex(metadata);
-        return growNYCContract.methods.farm(codeHex, metadataHex).send({ from: userAddress });
+        return growNYCContract.methods.farm(codeHex, metadata).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });
@@ -39,8 +38,7 @@ export function submitWarehouseCode(web3: any, code: string, metadata: string): 
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        let metadataHex = web3.utils.utf8ToHex(metadata);
-        return growNYCContract.methods.warehouse(codeHex, metadataHex).send({ from: userAddress });
+        return growNYCContract.methods.warehouse(codeHex, metadata).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });
@@ -53,9 +51,43 @@ export function submitRetailCode(web3: any, code: string, metadata: string): Pro
         let growNYCContract = results[0];
         let userAddress = results[1];
         let codeHex = web3.utils.utf8ToHex(code);
-        let metadataHex = web3.utils.utf8ToHex(metadata);
-        return growNYCContract.methods.retail(codeHex, metadataHex).send({ from: userAddress });
+        return growNYCContract.methods.retail(codeHex, metadata).send({ from: userAddress });
     }).then(result => {
         return result.transactionHash;
     });
+}
+
+export function getEventsForCode(web3: any, code: string): Promise<GrowNYCEvent[]> {
+    let growNYCPromise = Web3Helper.getGrowNYCContractPromise(web3);
+    return new Promise((resolve, reject) => { 
+        Promise.resolve(growNYCPromise).then(instance => {
+            let codeHex = web3.utils.utf8ToHex(code);
+            instance.getPastEvents(
+                'GrowNYCEvent',
+                {
+                    filter: { code: codeHex },
+                    fromBlock: 0,
+                    toBlock: 'latest'
+                },
+                (error, events) => {
+                    if(error) {
+                        resolve([]);
+                    } else {
+                        let result = events.map(e => mapGrowNYCEvent(e, web3));
+                        resolve(result);
+                    }
+                });
+        })
+    })
+}
+
+function mapGrowNYCEvent(e: any, web3: any) : GrowNYCEvent {
+    console.log(e)
+    let value: GrowNYCEvent = {
+        timestampInSeconds: e.returnValues.timestamp,
+        metadata: e.returnValues.metadata,
+        sender: e.returnValues.user,
+        order: e.returnValues.order
+    };
+    return value;
 }

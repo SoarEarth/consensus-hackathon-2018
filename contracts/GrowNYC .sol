@@ -12,22 +12,20 @@ import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
  
 contract GrowNYC is Ownable, Pausable {
 
-    event OnFarm(bytes32 indexed code, address indexed user, string metadata, uint256 timestamp);
-    event InWarehouse(bytes32 indexed code, address indexed user, string metadata, uint256 timestamp);
-    event InRetail(bytes32 indexed code, address indexed user, string metadata, uint256 timestamp);
-
+    event GrowNYCEvent(bytes32 indexed code, address indexed user, uint32 indexed order, string metadata, uint256 timestamp);
+    
     function GrowNYC() public {
     }
 
     function farm(bytes32 _code, string _metadata) public {
-        emit OnFarm(_code, msg.sender, _metadata, block.timestamp);
+        emit GrowNYCEvent(_code, msg.sender, 1, _metadata, block.timestamp);
     }
     
     function warehouse(bytes32 _code, string _metadata) public {
-        emit InWarehouse(_code, msg.sender, _metadata, block.timestamp);
+        emit GrowNYCEvent(_code, msg.sender, 2, _metadata, block.timestamp);
     }
 
     function retail(bytes32 _code, string _metadata) public {
-        emit InRetail(_code, msg.sender, _metadata, block.timestamp);
+        emit GrowNYCEvent(_code, msg.sender, 3, _metadata, block.timestamp);
     }
 }

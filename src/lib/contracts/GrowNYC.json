@@ -81,31 +81,9 @@
                     "type": "address"
                 },
                 {
-                    "indexed": false,
-                    "name": "metadata",
-                    "type": "string"
-                },
-                {
-                    "indexed": false,
-                    "name": "timestamp",
-                    "type": "uint256"
-                }
-            ],
-            "name": "OnFarm",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
                     "indexed": true,
-                    "name": "code",
-                    "type": "bytes32"
-                },
-                {
-                    "indexed": true,
-                    "name": "user",
-                    "type": "address"
+                    "name": "order",
+                    "type": "uint32"
                 },
                 {
                     "indexed": false,
@@ -118,34 +96,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "InWarehouse",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": true,
-                    "name": "code",
-                    "type": "bytes32"
-                },
-                {
-                    "indexed": true,
-                    "name": "user",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "name": "metadata",
-                    "type": "string"
-                },
-                {
-                    "indexed": false,
-                    "name": "timestamp",
-                    "type": "uint256"
-                }
-            ],
-            "name": "InRetail",
+            "name": "GrowNYCEvent",
             "type": "event"
         },
         {
