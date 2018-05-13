@@ -1,4 +1,4 @@
-const NYGrower = artifacts.require("NYGrower");
+const GrowNYC = artifacts.require("GrowNYC");
 
 const BigNumber = web3.BigNumber;
 
@@ -7,10 +7,10 @@ const should = require('chai')
   .use(require('chai-bignumber')(BigNumber))
   .should();
 
-contract('NYGrower', function ([]) {
+contract('GrowNYC', function ([]) {
   
   beforeEach(async function () {
-    this.nyGrower = await NYGrower.new();
+    this.growNYC = await GrowNYC.new();
   });
 
   it("..deployment successful", async function () {

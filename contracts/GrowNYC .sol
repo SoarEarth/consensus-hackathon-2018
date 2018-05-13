@@ -4,12 +4,12 @@ import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
 
 /**
- * @title NYGrower
+ * @title GrowNYC 
  *
  */
  
-contract NYGrower is Ownable, Pausable {
+contract GrowNYC  is Ownable, Pausable {
 
-    function NYGrower() public {
+    function GrowNYC() public {
     }
 }
