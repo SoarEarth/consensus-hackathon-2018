@@ -8,6 +8,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-geocode": "0.0.7",
+    "react-leaflet": "^1.9.1",
     "react-qr-reader": "^2.1.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
