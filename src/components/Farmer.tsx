@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import QrReader from 'react-qr-reader'
+
 
 
 interface FarmerProps extends React.Props<Farmer> {
@@ -7,15 +9,18 @@ interface FarmerProps extends React.Props<Farmer> {
 }
 
 interface FarmerState {
-    code: string;
+    code?: any;
+    result?: any;
 }
 
 class Farmer extends React.Component<{}, FarmerState> {
 
     constructor(props: FarmerProps) {
         super(props);
-        this.setState({code: ''});
+        this.state = {code: null, result: null};
         this.handleCodeChange = this.handleCodeChange.bind(this);
+        this.handleScan = this.handleScan.bind(this);
+        this.handleError = this.handleError.bind(this);
     }
 
 
@@ -29,8 +34,20 @@ class Farmer extends React.Component<{}, FarmerState> {
         var code = event.target.value;
         console.log('Code', code);
 
-        //TODO: write
+        // TODO: write
     }
+
+    handleScan(data){
+        console.log('handleScan: ', data);
+        if(data){
+          this.setState({
+            result: data,
+          })
+        }
+      }
+      handleError(err){
+        console.error(err)
+      }
 
     public render(): React.ReactElement<{}> {
         return (
@@ -45,15 +62,25 @@ class Farmer extends React.Component<{}, FarmerState> {
 
                 <div className="container">
                     <div className="row">
-                    
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                        Code:
-                        <input type="text" onChange={this.handleCodeChange} />
-                        </label>
-                        <input type="submit" value="Submit" />
-                    </form>
 
+                        { console.log(this.state.result)}
+                        { this.state.result !== null ? 
+                            <form onSubmit={this.handleSubmit}>
+                                <label>
+                                Code:
+                                <input type="text" value={this.state.result} onChange={this.handleCodeChange} />
+                                </label>
+                                <input type="submit" value="Submit" />
+                            </form>
+                        : 
+                            <QrReader
+                                delay={300}
+                                onError={this.handleError}
+                                onScan={this.handleScan}
+                                style={{ width: '100%' }}
+                            />
+                        }
+                        
                     </div>
                 </div>
             </div>
