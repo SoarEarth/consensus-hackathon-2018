@@ -32,14 +32,27 @@ class Admin extends React.Component<AdminProps, AdminState> {
 
     public render(): React.ReactElement<{}> {
         return (
-            <Row>
+            <div>
+                    
+                <div className="jumbotron jumbotron-fluid">
+                    <div className="container">
+                        <h1 className="display-4">Fluid jumbotron</h1>
+                        <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                
+                        <img src="/assets/logo.png" alt="Grow NYC" />
+                    </div>
+                </div>
+            
+
+            
                 <dl>
                     <dt>Owner</dt>
                     <dd>{this.state.info.owner}</dd>
                     <dt>User</dt>
                     <dd>{this.state.info.userAddress}</dd>
                 </dl>
-            </Row>
+               
+            </div>
         );
     }
 }

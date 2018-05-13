@@ -44,7 +44,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         return (
             <Navbar dark color="dark" expand="md">
                 <Container>
-                    <NavbarBrand href="#"><img src="/assets/logo.png" alt="Grow NYC" /></NavbarBrand>
+                    <NavbarBrand href="#">GrowAUZ</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
