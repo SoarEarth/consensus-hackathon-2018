@@ -96,6 +96,10 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                             <div className="row">
                                 <h2>Retailer:</h2>
                             </div>
+
+                            <div className="row" >
+                                <img src="/assets/map.jpg" style={{maxWidth: '220px', maxHeight: '220px'}} />
+                            </div>
                     
                         </div>
                         : 
