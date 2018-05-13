@@ -4,11 +4,14 @@ import QrReader from 'react-qr-reader'
 import '../index.css'
 import { getEventsForCode } from '../lib/growNYC-service';
 
-interface BuyerProps extends React.Props<Buyer> {}
+interface BuyerProps extends React.Props<Buyer> { }
 
 interface BuyerState {
     code?: any;
     result?: any;
+    farmer?: any;
+    warehouse?: any;
+    retail?: any;
 }
 
 class Buyer extends React.Component<BuyerProps, BuyerState> {
@@ -19,7 +22,7 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
 
     constructor(props: BuyerProps) {
         super(props);
-        this.state = {code: null, result: null};
+        this.state = { code: null, result: null, farmer: {}, warehouse: {}, retail: {} };
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleScan = this.handleScan.bind(this);
         this.handleError = this.handleError.bind(this);
@@ -28,7 +31,7 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
 
     handleCodeChange(event: any) {
         var code = event.target.value;
-        this.setState({code: code});
+        this.setState({ code: code });
         console.log('Code', code);
     }
 
@@ -37,29 +40,40 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
         let web3 = this.context.state.web3;
         var code = this.state.code;
         console.log('Code', code);
-        
+
         //TODO: write
     }
 
-    handleScan(data){
+    handleScan(data) {
         console.log('handleScan: ', data);
-        if(data){
-        let web3 = this.context.state.web3;
-            
-          this.setState({
-            result: data,
-          })
-          getEventsForCode(web3, String(data))
-        .then(results => {
-            console.log(results);
-        })
-        .catch(err => {
-            console.error(err);
-        })
-        }
-      }
+        if (data) {
+            let web3 = this.context.state.web3;
 
-    handleError(err){
+            this.setState({
+                result: data,
+            })
+            getEventsForCode(web3, String(data))
+                .then(results => {
+                    results.forEach(i => {
+                        if(i.order === 1){
+                            this.setState({farmer: {address: i.sender, date: i.timestamp}});
+                        } else if(i.order === 2){
+                            this.setState({warehouse: {address: i.sender, date: i.timestamp}});                           
+                        } else if(i.order === 3){
+                            this.setState({retail: {address: i.sender, date: i.timestamp}});                                                      
+                        }
+                    })
+                    console.log(results);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+        }
+    }
+
+
+
+    handleError(err) {
         console.error(err)
     }
 
@@ -77,28 +91,23 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                 <div className="container">
                     <div className="row">
 
-                    { this.state.result !== null ? 
-                        <div className="col-md-12">
-                            <div className="row">
-                                <h2>Product</h2>
-                                <p>{this.state.result}</p>
+                        {this.state.result !== null ?
+                            <div className="col-md-12">
+                                <dl>
+                                    <dt>Product</dt>
+                                    <dd>{this.state.result}</dd>
+                                    <dt>Farmer</dt>
+                                    <dd>{this.state.farmer.address}</dd>
+                                    <dd>{this.state.farmer.date && this.state.farmer.date.toLocaleString()}</dd>
+                                    <dt>Warehouse</dt>
+                                    <dd>{this.state.warehouse.address}</dd>
+                                    <dd>{this.state.warehouse.date && this.state.warehouse.date.toLocaleString()}</dd>
+                                    <dt>Retail</dt>
+                                    <dd>{this.state.retail.address}</dd>
+                                    <dd>{this.state.retail.date && this.state.retail.date.toLocaleString()}</dd>
+                                </dl>
                             </div>
-
-                            <div className="row">
-                                <h2>Farmer: </h2>
-
-                            </div>
-
-                            <div className="row">
-                                <h2>Warehouse: </h2>
-                            </div>
-
-                            <div className="row">
-                                <h2>Retailer:</h2>
-                            </div>
-                    
-                        </div>
-                        : 
+                            :
                             <QrReader
                                 delay={300}
                                 onError={this.handleError}
@@ -106,7 +115,7 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                                 style={{ width: '100%' }}
                             />
                         }
-                    
+
                     </div>
                 </div>
             </div>

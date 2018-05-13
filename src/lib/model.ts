@@ -11,7 +11,7 @@ export interface Metadata {
 
 export interface GrowNYCEvent {
     order: number;
-    timestampInSeconds: number;
+    timestamp: Date;
     sender: string;
     metadata: Metadata;
 }

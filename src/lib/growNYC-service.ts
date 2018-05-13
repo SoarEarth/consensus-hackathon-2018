@@ -85,12 +85,17 @@ export function getEventsForCode(web3: any, code: string): Promise<GrowNYCEvent[
 }
 
 function mapGrowNYCEvent(e: any, web3: any) : GrowNYCEvent {
-    console.log(e)
     let value: GrowNYCEvent = {
-        timestampInSeconds: e.returnValues.timestamp,
+        timestamp: toDateTime(e.returnValues.timestamp),
         metadata: e.returnValues.metadata,
         sender: e.returnValues.user,
-        order: e.returnValues.order
+        order: Number(e.returnValues.order)
     };
     return value;
+}
+
+function toDateTime(secs: number) : Date {
+    var t = new Date(1970, 0, 1); // Epoch
+    t.setSeconds(secs);
+    return t;
 }
