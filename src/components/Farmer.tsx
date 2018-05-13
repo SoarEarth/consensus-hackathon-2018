@@ -29,6 +29,7 @@ class Farmer extends React.Component<{}, FarmerState> {
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleScan = this.handleScan.bind(this);
         this.handleError = this.handleError.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -51,7 +52,7 @@ class Farmer extends React.Component<{}, FarmerState> {
     handleSubmit(event: any) {
         event.preventDefault();
         let web3 = this.context.state.web3;
-        var code = this.state.code;
+        var code = this.state.result;
         console.log('Code', code);
         
         submitFarmCode(web3, code, '{}').then(res => {
@@ -135,7 +136,6 @@ class Farmer extends React.Component<{}, FarmerState> {
                                 <label>
                                 Code:
                                 <input type="text" value={this.state.result} onChange={this.handleCodeChange} />
-                                <input type="text" value={this.state.streetAddress} />
                                 </label>
                                 <input type="submit" value="Submit" />
                                 { console.log('lat', this.state.lat) }

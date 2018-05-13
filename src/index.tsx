@@ -22,7 +22,7 @@ export const RouteMap: React.StatelessComponent<{}> = () => (
         <Route path="/farmer" render={(props) => <Farmer {...props} /> }/>
         <Route path="/warehouse" render={(props) => <Warehouse {...props}/> } />
         <Route path="/retailer" render={(props) => <Retailer {...props}/> } />
-        <Route path="/buyer" render={(props) => <Retailer {...props} /> } /> 
+        <Route path="/buyer" render={(props) => <Buyer {...props} /> } /> 
     </Switch>
   </div>
 );

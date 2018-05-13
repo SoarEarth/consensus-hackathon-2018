@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import QrReader from 'react-qr-reader'
-import '../index/css';
+import '../index.css'
 
 interface BuyerProps extends React.Props<Buyer> {}
 
@@ -63,13 +63,25 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                     <div className="row">
 
                     { this.state.result !== null ? 
-                            <form onSubmit={this.handleSubmit}>
-                                <label>
-                                Code:
-                                <input type="text" value={this.state.result} onChange={this.handleCodeChange} />
-                                </label>
-                                <input type="submit" value="Submit" />
-                            </form>
+                        <div className="col-md-12">
+                            <div className="row">
+                                <h2> QR Code </h2>
+                            </div>
+
+                            <div className="row">
+                                <h2>Farmer: </h2>
+
+                            </div>
+
+                            <div className="row">
+                                <h2>Warehouse: </h2>
+                            </div>
+
+                            <div className="row">
+                                <h2>Retailer:</h2>
+                            </div>
+                    
+                        </div>
                         : 
                             <QrReader
                                 delay={300}
