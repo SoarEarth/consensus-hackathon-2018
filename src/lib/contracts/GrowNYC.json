@@ -69,6 +69,87 @@
         },
         {
             "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "code",
+                    "type": "bytes32"
+                },
+                {
+                    "indexed": true,
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "metadata",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "name": "timestamp",
+                    "type": "uint256"
+                }
+            ],
+            "name": "OnFarm",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "code",
+                    "type": "bytes32"
+                },
+                {
+                    "indexed": true,
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "metadata",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "name": "timestamp",
+                    "type": "uint256"
+                }
+            ],
+            "name": "InWarehouse",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "code",
+                    "type": "bytes32"
+                },
+                {
+                    "indexed": true,
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "metadata",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "name": "timestamp",
+                    "type": "uint256"
+                }
+            ],
+            "name": "InRetail",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
             "inputs": [],
             "name": "Pause",
             "type": "event"
@@ -95,6 +176,60 @@
             ],
             "name": "OwnershipTransferred",
             "type": "event"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_code",
+                    "type": "bytes32"
+                },
+                {
+                    "name": "_metadata",
+                    "type": "string"
+                }
+            ],
+            "name": "farm",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_code",
+                    "type": "bytes32"
+                },
+                {
+                    "name": "_metadata",
+                    "type": "string"
+                }
+            ],
+            "name": "warehouse",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_code",
+                    "type": "bytes32"
+                },
+                {
+                    "name": "_metadata",
+                    "type": "string"
+                }
+            ],
+            "name": "retail",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
         }
     ]
 }

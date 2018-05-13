@@ -3,6 +3,8 @@ import * as PropTypes from 'prop-types';
 import QrReader from 'react-qr-reader'
 
 
+import { submitFarmCode } from '../lib/growNYC-service';
+
 
 interface FarmerProps extends React.Props<Farmer> {
 
@@ -16,6 +18,10 @@ interface FarmerState {
 }
 
 class Farmer extends React.Component<{}, FarmerState> {
+
+    static contextTypes = {
+        state: PropTypes.object
+    };
 
     constructor(props: FarmerProps) {
         super(props);
@@ -42,10 +48,15 @@ class Farmer extends React.Component<{}, FarmerState> {
     }
 
     handleSubmit(event: any) {
-        var code = event.target.value;
+        event.preventDefault();
+        let web3 = this.context.state.web3;
+        var code = this.state.code;
         console.log('Code', code);
-
-        //TODO: write
+        
+        submitFarmCode(web3, code, '{}').then(res => {
+            console.log('TransactionHash: ', res);
+        })
+        // TODO: write
     }
 
     handleScan(data){
