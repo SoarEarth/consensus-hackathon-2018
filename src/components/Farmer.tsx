@@ -33,7 +33,6 @@ class Farmer extends React.Component<{}, FarmerState> {
 
     componentDidMount() {
         this.usersLocation();
-
     }
 
     componentWillReceiveProps(props: FarmerProps) {
@@ -55,8 +54,7 @@ class Farmer extends React.Component<{}, FarmerState> {
         
         submitFarmCode(web3, code, '{}').then(res => {
             console.log('TransactionHash: ', res);
-        })
-        // TODO: write
+        });
     }
 
     handleScan(data){
