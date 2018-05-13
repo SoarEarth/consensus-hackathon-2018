@@ -8,23 +8,29 @@ import registerServiceWorker from './registerServiceWorker';
 // Import default Bootstrap 4 CSS
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { Farmer } from './components/Farmer';
-import { Warehouse } from './components/Warehouse';
-import { Retailer } from './components/Retailer';
-import { Buyer } from './components/Buyer';
+import Farmer from './components/Farmer';
+import Warehouse from './components/Warehouse';
+import Retailer from './components/Retailer';
+import Buyer from './components/Buyer';
+import Admin from './components/admin';
+
+
+export const RouteMap: React.StatelessComponent<{}> = () => (
+  <div>
+    <Switch>
+    <Route exact path="/"><App /></Route>
+        <Route path="/farmer" render={(props) => <Farmer {...props} /> }/>
+        <Route path="/warehouse" render={(props) => <Warehouse {...props}/> } />
+        <Route path="/retailer" render={(props) => <Retailer {...props}/> } />
+        <Route path="/buyer" render={(props) => <Retailer {...props} /> } /> 
+    </Switch>
+  </div>
+);
 
 ReactDOM.render(
   <Web3Provider>
     <Navigation />
-    <Router>
-      <Switch>
-        <Route exact path="/"><App /></Route>
-        <Route path="/farmer">{Farmer}</Route>
-        <Route path="/warehouse">{Warehouse}</Route>
-        <Route path="/retailer">{Retailer}</Route>
-        <Route path="/buyer">{Buyer}</Route>
-      </Switch>
-    </Router>
+      <Router><RouteMap /></Router>
   </Web3Provider>,
   document.getElementById('root') as HTMLElement
 );
