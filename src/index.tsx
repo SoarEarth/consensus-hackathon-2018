@@ -18,11 +18,11 @@ import Admin from './components/admin';
 export const RouteMap: React.StatelessComponent<{}> = () => (
   <div>
     <Switch>
-    <Route exact path="/"><App /></Route>
-        <Route path="/farmer" render={(props) => <Farmer {...props} /> }/>
-        <Route path="/warehouse" render={(props) => <Warehouse {...props}/> } />
-        <Route path="/retailer" render={(props) => <Retailer {...props}/> } />
-        <Route path="/buyer" render={(props) => <Buyer {...props} /> } /> 
+      <Route exact path="/"><App /></Route>
+      <Route path="/farmer" render={(props) => <Farmer {...props} />} />
+      <Route path="/warehouse" render={(props) => <Warehouse {...props} />} />
+      <Route path="/retailer" render={(props) => <Retailer {...props} />} />
+      <Route path="/buyer" render={(props) => <Buyer {...props} />} />
     </Switch>
   </div>
 );
@@ -30,7 +30,7 @@ export const RouteMap: React.StatelessComponent<{}> = () => (
 ReactDOM.render(
   <Web3Provider>
     <Navigation />
-      <Router><RouteMap /></Router>
+    <Router><RouteMap /></Router>
   </Web3Provider>,
   document.getElementById('root') as HTMLElement
 );

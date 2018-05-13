@@ -42,14 +42,6 @@ class Admin extends React.Component<AdminProps, AdminState> {
                         <img src="/assets/logo.png" alt="Grow NYC" />
                     </div>
                 </div>
-            
-                <dl>
-                    <dt>Owner</dt>
-                    <dd>{this.state.info.owner}</dd>
-                    <dt>User</dt>
-                    <dd>{this.state.info.userAddress}</dd>
-                </dl>
-               
             </div>
         );
     }
