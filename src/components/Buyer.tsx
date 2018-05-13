@@ -99,6 +99,8 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                                     <dt>Farmer</dt>
                                     <dd>{this.state.farmer.address}</dd>
                                     <dd>{this.state.farmer.date && this.state.farmer.date.toLocaleString()}</dd>
+                                    <img src="/assets/map.jpg" style={{maxWidth: '220px', maxHeight: '220px'}} />
+                                    
                                     <dt>Warehouse</dt>
                                     <dd>{this.state.warehouse.address}</dd>
                                     <dd>{this.state.warehouse.date && this.state.warehouse.date.toLocaleString()}</dd>
@@ -106,8 +108,10 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                                     <dd>{this.state.retail.address}</dd>
                                     <dd>{this.state.retail.date && this.state.retail.date.toLocaleString()}</dd>
                                 </dl>
+
                             </div>
-                            :
+
+                        : 
                             <QrReader
                                 delay={300}
                                 onError={this.handleError}
