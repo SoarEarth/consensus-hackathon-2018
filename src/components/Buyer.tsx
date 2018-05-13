@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import QrReader from 'react-qr-reader'
+import '../index.css'
 import { getEventsForCode } from '../lib/growNYC-service';
-
 
 interface BuyerProps extends React.Props<Buyer> {}
 
 interface BuyerState {
-    code: string;
+    code?: any;
+    result?: any;
 }
 
 class Buyer extends React.Component<BuyerProps, BuyerState> {
@@ -17,9 +19,10 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
 
     constructor(props: BuyerProps) {
         super(props);
-        this.state = {code: ''};
+        this.state = {code: null, result: null};
         this.handleCodeChange = this.handleCodeChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleScan = this.handleScan.bind(this);
+        this.handleError = this.handleError.bind(this);
     }
 
 
@@ -44,6 +47,20 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
         //TODO: write
     }
 
+    handleScan(data){
+        console.log('handleScan: ', data);
+        if(data){
+          this.setState({
+            result: data,
+          })
+        }
+      }
+
+    handleError(err){
+        console.error(err)
+    }
+
+
     public render(): React.ReactElement<{}> {
         return (
             <div>
@@ -57,15 +74,36 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
 
                 <div className="container">
                     <div className="row">
-                    
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                        Code:
-                        <input type="text" onChange={this.handleCodeChange} />
-                        </label>
-                        <input type="submit" value="Submit" />
-                    </form>
 
+                    { this.state.result !== null ? 
+                        <div className="col-md-12">
+                            <div className="row">
+                                <h2> QR Code </h2>
+                            </div>
+
+                            <div className="row">
+                                <h2>Farmer: </h2>
+
+                            </div>
+
+                            <div className="row">
+                                <h2>Warehouse: </h2>
+                            </div>
+
+                            <div className="row">
+                                <h2>Retailer:</h2>
+                            </div>
+                    
+                        </div>
+                        : 
+                            <QrReader
+                                delay={300}
+                                onError={this.handleError}
+                                onScan={this.handleScan}
+                                style={{ width: '100%' }}
+                            />
+                        }
+                    
                     </div>
                 </div>
             </div>
