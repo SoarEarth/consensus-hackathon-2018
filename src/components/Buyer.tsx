@@ -47,7 +47,6 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
         console.error(err)
     }
 
-
     public render(): React.ReactElement<{}> {
         return (
             <div>
@@ -65,7 +64,8 @@ class Buyer extends React.Component<BuyerProps, BuyerState> {
                     { this.state.result !== null ? 
                         <div className="col-md-12">
                             <div className="row">
-                                <h2> QR Code </h2>
+                                <h2>Product</h2>
+                                <p>{this.state.result}</p>
                             </div>
 
                             <div className="row">
